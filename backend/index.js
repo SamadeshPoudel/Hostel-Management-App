@@ -7,7 +7,7 @@ app.post("/create", (req, res)=>{
 
 })
 
-app.get("/", (req, res)=>{
+app.get("/listOfRequests", (req, res)=>{
     //route to read the request lists
     res.send("Hello engineer sir, How are you?")
     // console.log("Hey there")
