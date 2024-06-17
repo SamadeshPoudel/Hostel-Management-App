@@ -1,28 +1,88 @@
 const express = require("express");
 const app = express();
 app.listen(3000);
+app.use(express.json())
+const mongoose = require('mongoose');
+mongoose.connect("mongodb+srv://poudelsamadesh:pkAV2UBUH6vQkuBS@cluster1-hostel-managem.3cxkcsp.mongodb.net/Hostel-Management-App")
+const {createLunchReq,
+    createHousekeepingReq,
+    createComplainReq,
+    updateLunchReq,
+    updateHousekeepingReq,
+    updateComplainReq} = require("./inputValidation")
+
+const {LunchRequest} = require("./lunchModel")
+const {HousekeepingRequest} = require("./housekeepingModel");
+const { ComplainRequest } = require("./complainModel");
 
 
 //different post endpoints for different requests
 
-app.post("/create/lunch", (req, res)=>{
+app.post("/create/lunch", async (req, res)=>{
     //route to create lunch requests from user
-    const createPayload = req.body;
-    // const parsePayload = 
+    let createPayload = req.body;
+    const parsePayload = createLunchReq.safeParse(createPayload);
+     if(!parsePayload){
+        res.status(401).json({
+            msg:"Input validation failed"
+        })
+        return;
+     }
+
+
+     await LunchRequest.create({
+        name: createPayload.name,
+        college: createPayload.college,
+        phoneNumber: createPayload.phoneNumber
+     })
+     res.json({
+        msg: "Lunch Request created successfully"
+     })
 
 })
 
-app.post("/create/housekeeping", (req, res)=>{
+app.post("/create/housekeeping",async (req, res)=>{
     //route to create housekeeping requests from user
-    const createPayload = req.body;
-    // const parsePayload = 
+    let createPayload = req.body;
+    const parsePayload = createHousekeepingReq.safeParse(createPayload);
+     if(!parsePayload){
+        res.status(401).json({
+            msg:"Input validation failed"
+        })
+        return;
+     }
+
+
+     await HousekeepingRequest.create({
+        name: createPayload.name,
+        roomNumber: createPayload.roomNumber,
+     })
+     res.json({
+        msg: "HouseKeeping Request created successfully"
+     })
 
 })
 
-app.post("/create/complain", (req, res)=>{
+app.post("/create/complain",async (req, res)=>{
     //route to create complain requests from user
-    const createPayload = req.body;
-    // const parsePayload = 
+    let createPayload = req.body;
+    const parsePayload = createComplainReq.safeParse(createPayload);
+     if(!parsePayload){
+        res.status(401).json({
+            msg:"Input validation failed"
+        })
+        return;
+     }
+
+
+     await ComplainRequest.create({
+        name: createPayload.name,
+        issue: createPayload.issue,
+        roomNumber: createPayload.roomNumber,
+     })
+     res.json({
+        msg: "Complain registered successfully"
+     })
 
 })
 
