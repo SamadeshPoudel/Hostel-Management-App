@@ -7,7 +7,7 @@ users can:
 1. Request house keeping
 2. Request lunch in university
 3. Raise a complain / file an issue
-4. Pay their fees (This feature will be brought later as i progess in the development)
+4. Pay their fees (This feature will be brought later as I progess in the development)
 
 Admins/Management team can:
 1. See all types of requests from users and settle them down.
