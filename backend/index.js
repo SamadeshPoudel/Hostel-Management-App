@@ -1,9 +1,10 @@
 const express = require("express");
 const app = express();
-app.listen(3000);
 app.use(express.json())
-const mongoose = require('mongoose');
-mongoose.connect("mongodb+srv://poudelsamadesh:pkAV2UBUH6vQkuBS@cluster1-hostel-managem.3cxkcsp.mongodb.net/Hostel-Management-App")
+const connectDB = require('./dbConfig');
+// Connect to MongoDB
+connectDB();
+
 const {createLunchReq,
     createHousekeepingReq,
     createComplainReq,
@@ -14,6 +15,7 @@ const {createLunchReq,
 const {LunchRequest} = require("./lunchModel")
 const {HousekeepingRequest} = require("./housekeepingModel");
 const { ComplainRequest } = require("./complainModel");
+app.listen(3000);
 
 
 //different post endpoints for different requests
@@ -88,33 +90,118 @@ app.post("/create/complain",async (req, res)=>{
 
 //DIFFERENT GET ENDPOINTS FOR GETTING THREE DIFFERENT REQUESTS 
 
-app.get("/requests/lunch", (req, res)=>{
+app.get("/requests/lunch", async (req, res)=>{
     //route to get all the lunch requests
-    
+    const lunchReq = await LunchRequest.find();
+    res.json({
+        lunchReq
+    })
+
 })
 
-app.get("/requests/housekeeping", (req, res)=>{
+app.get("/requests/housekeeping",async (req, res)=>{
     //route to get all the housekeeping requests
+    const housekeepingReq = await HousekeepingRequest.find();
+    res.json({
+        housekeepingReq
+    })
     
 })
 
-app.get("/requests/complains", (req, res)=>{
+app.get("/requests/complains", async (req, res)=>{
     //route to get all the complains filed by you
+    const complainReq = await ComplainRequest.find();
+    res.json({
+        complainReq
+    })
     
 })
 
 //DIFFERENT PUT ENDPOINTS FOR 3 DIFFERENT REQUESTS
 
-app.put("/update/lunch/:id", (req, res)=>{
+app.put("/update/lunch/:id", async (req, res)=>{
     //route to update the lunch requests
+    const {id}= req.params;
+    const updatePayload = req.body;
+    const parsePayload = updateLunchReq.safeParse(updatePayload);
+
+    if (!parsePayload.success){
+        console.log(parsePayload.error); //just to log the error
+        return res.json({ msg: "Input validation failed" });
+    }
+
+    try{
+        const updatedLunch = await LunchRequest.findByIdAndUpdate(id, updatePayload, {new : true });
+
+        if(!updatedLunch){
+            return res.status(404).json({msg: "No lunch request found with this id"})
+        }
+
+        res.json({
+            msg: "Lunch Request updated successfully",
+            updatedLunch
+        });
+    } catch (err){
+        res.status(500).json({msg:"Server error"})
+    }
+    
 })
 
-app.put("/update/housekeeping/:id", (req, res)=>{
+app.put("/update/housekeeping/:id", async (req, res)=>{
     //route to update the housekeeping requests
+    const {id} = req.params;
+    const updatePayload = req.body;
+    const parsePayload = updateHousekeepingReq.safeParse(updatePayload);
+
+    if(!parsePayload.success){
+        return res.json({
+            msg: "Input validation failed"
+        })
+    }
+    try{
+        const updatedHousekeeping = await HousekeepingRequest.findByIdAndUpdate(id, updatePayload, {new: true});
+
+        if(!updatedHousekeeping){
+            return res.status(404).json({
+                msg: "No housekeeping request found with this id"
+            })
+        }
+
+        res.json({
+            msg: "HouseKeeping request successfully added",
+            updatedHousekeeping
+        })
+    }catch(err){
+        res.status(500).json({msg: "Server error"})
+    }
 })
 
-app.put("/update/complains/:id", (req, res)=>{
+app.put("/update/complains/:id",async (req, res)=>{
     //route to update the complains 
+    const {id} = req.params;
+    const updatePayload = req.body;
+    const parsePayload = updateComplainReq.safeParse(updatePayload);
+
+    if(!parsePayload.success){
+        console.log(parsePayload.error);
+        return res.json({msg: "Input validation failed"})
+    }
+
+    try {
+        const updatedComplain = await ComplainRequest.findByIdAndUpdate(id, updatePayload, {new: true});
+
+        if(!updatedComplain){
+            return res.status(404).json({msg: "No complains request found by this id"})
+        }
+
+        res.json({
+            msg: "Complain request updated successfully",
+            updatedComplain
+        })
+        
+    } catch (error) {
+        res.status(500).json({msg: "Internal server error"})
+    }
 })
 
 

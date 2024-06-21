@@ -8,7 +8,7 @@ const baseRequest = zod.object({
 
 const createLunchReq = baseRequest.omit({ _id: true }).extend({
     college: zod.string(),
-    phoneNumber: zod.number(),
+    phoneNumber: zod.string(),
 });
 
 const createHousekeepingReq = baseRequest.omit({ _id: true }).extend({
@@ -17,19 +17,24 @@ const createHousekeepingReq = baseRequest.omit({ _id: true }).extend({
 
 const createComplainReq = baseRequest.omit({ _id: true }).extend({
     issue: zod.string(),
-    roomNumber: zod.number(),
+    roomNumber: zod.string(),
 });
 
-const updateLunchReq = baseRequest.extend({
+// const updateLunchReq = baseRequest.extend({
+//     college: zod.string(),
+//     phoneNumber: zod.string()
+// });
+
+const updateLunchReq = baseRequest.omit({_id: true}).extend({
     college: zod.string(),
-    phoneNumber: zod.number(),
+    phoneNumber: zod.string(),
 });
 
-const updateHousekeepingReq = baseRequest.extend({
-    roomNumber: zod.number(),
+const updateHousekeepingReq = baseRequest.omit({_id: true}).extend({
+    roomNumber: zod.string(),
 });
 
-const updateComplainReq = baseRequest.extend({
+const updateComplainReq = baseRequest.omit({_id: true}).extend({
     issue: zod.string(),
     roomNumber: zod.number()
 });
