@@ -207,17 +207,40 @@ app.put("/update/complains/:id",async (req, res)=>{
 
 //DIFFERENT DELETE ENDPOINTS FOR 3 DIFFERENT REQUESTS
 
-app.delete("/delete/lunch/:id", (req, res)=>{
+app.delete("/delete/lunch/:id", async (req, res)=>{
     //route to delete the lunch requests
+    const {id} = req.params;
+    try {
+        await LunchRequest.findByIdAndDelete(id);
+
+        res.status(200).json({msg:"Lunch request deleted successfully"})
+
+    } catch (error) {
+        res.status(500).json({msg:"Error deleting lunch request"})
+    }
     
 })
 
-app.delete("/delete/housekeeping/:id", (req, res)=>{
+app.delete("/delete/housekeeping/:id", async (req, res)=>{
     //route to delete the housekeeping requests
+    const {id} = req.params;
+    try {
+        await HousekeepingRequest.findByIdAndDelete(id);
+        res.status(200).json({msg:"Housekeeping request successfully deleted"})
+    } catch (error) {
+        res.status(500).json({msg:"Error deleting housekeeping request"})
+    }
     
 })
 
-app.delete("/delete/complains/:id", (req, res)=>{
+app.delete("/delete/complains/:id",async (req, res)=>{
     //route to delete the complains requests
+    const {id} = req.params;
+    try {
+        await ComplainRequest.findByIdAndDelete(id);
+        res.status(200).json({msg:"Complain request successfully deleted"})
+    } catch (error) {
+        res.status(500).json({msg:"Error deleting complain request"})
+    }
     
 })
