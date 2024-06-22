@@ -20,6 +20,12 @@ const createComplainReq = baseRequest.omit({ _id: true }).extend({
     roomNumber: zod.string(),
 });
 
+const createUser = baseRequest.omit({_id: true, name: true}).extend({
+    username: zod.string().min(3, "Username should be at least 3 characters long"),
+    email: zod.string().email("Invalid email address"),
+    password: zod.string().min(8, "Password should be at least 8 characters long"),
+});
+
 // const updateLunchReq = baseRequest.extend({
 //     college: zod.string(),
 //     phoneNumber: zod.string()
@@ -43,6 +49,7 @@ module.exports = {
     createLunchReq,
     createHousekeepingReq,
     createComplainReq,
+    createUser,
     updateLunchReq,
     updateHousekeepingReq,
     updateComplainReq

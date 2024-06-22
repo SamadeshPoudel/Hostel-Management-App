@@ -4,10 +4,16 @@ app.use(express.json())
 const connectDB = require('./dbConfig');
 // Connect to MongoDB
 connectDB();
+const jwt = require("jsonwebtoken");
+const jwtPassword = '12345';
+
+const authRoutes = require('./auth/authRoutes');
+app.use('/', authRoutes);
 
 const {createLunchReq,
     createHousekeepingReq,
     createComplainReq,
+    createUser,
     updateLunchReq,
     updateHousekeepingReq,
     updateComplainReq} = require("./inputValidation")
@@ -17,10 +23,24 @@ const {HousekeepingRequest} = require("./housekeepingModel");
 const { ComplainRequest } = require("./complainModel");
 app.listen(3000);
 
+//AUTHENTICATION MIDDLEWARE
+const authenticate = (req, res, next)=>{
+    const token = req.headers.authorization;
+    if(!token){
+        return res.json({msg:"Access denied: No token found"})
+    }
+    try {
+        const verified = jwt.verify(token, jwtPassword);
+        req.user = verified;
+        next();
+    } catch (error) {
+        res.status(400).send("Invalid token")
+    }
+}
 
 //different post endpoints for different requests
 
-app.post("/create/lunch", async (req, res)=>{
+app.post("/create/lunch",authenticate, async (req, res)=>{
     //route to create lunch requests from user
     let createPayload = req.body;
     const parsePayload = createLunchReq.safeParse(createPayload);
@@ -43,7 +63,7 @@ app.post("/create/lunch", async (req, res)=>{
 
 })
 
-app.post("/create/housekeeping",async (req, res)=>{
+app.post("/create/housekeeping",authenticate,async (req, res)=>{
     //route to create housekeeping requests from user
     let createPayload = req.body;
     const parsePayload = createHousekeepingReq.safeParse(createPayload);
@@ -65,7 +85,7 @@ app.post("/create/housekeeping",async (req, res)=>{
 
 })
 
-app.post("/create/complain",async (req, res)=>{
+app.post("/create/complain",authenticate,async (req, res)=>{
     //route to create complain requests from user
     let createPayload = req.body;
     const parsePayload = createComplainReq.safeParse(createPayload);
@@ -90,16 +110,15 @@ app.post("/create/complain",async (req, res)=>{
 
 //DIFFERENT GET ENDPOINTS FOR GETTING THREE DIFFERENT REQUESTS 
 
-app.get("/requests/lunch", async (req, res)=>{
+app.get("/requests/lunch",authenticate, async (req, res)=>{
     //route to get all the lunch requests
     const lunchReq = await LunchRequest.find();
     res.json({
         lunchReq
     })
-
 })
 
-app.get("/requests/housekeeping",async (req, res)=>{
+app.get("/requests/housekeeping",authenticate,async (req, res)=>{
     //route to get all the housekeeping requests
     const housekeepingReq = await HousekeepingRequest.find();
     res.json({
@@ -108,7 +127,7 @@ app.get("/requests/housekeeping",async (req, res)=>{
     
 })
 
-app.get("/requests/complains", async (req, res)=>{
+app.get("/requests/complains",authenticate, async (req, res)=>{
     //route to get all the complains filed by you
     const complainReq = await ComplainRequest.find();
     res.json({
@@ -119,7 +138,7 @@ app.get("/requests/complains", async (req, res)=>{
 
 //DIFFERENT PUT ENDPOINTS FOR 3 DIFFERENT REQUESTS
 
-app.put("/update/lunch/:id", async (req, res)=>{
+app.put("/update/lunch/:id",authenticate, async (req, res)=>{
     //route to update the lunch requests
     const {id}= req.params;
     const updatePayload = req.body;
@@ -147,7 +166,7 @@ app.put("/update/lunch/:id", async (req, res)=>{
     
 })
 
-app.put("/update/housekeeping/:id", async (req, res)=>{
+app.put("/update/housekeeping/:id",authenticate, async (req, res)=>{
     //route to update the housekeeping requests
     const {id} = req.params;
     const updatePayload = req.body;
@@ -176,7 +195,7 @@ app.put("/update/housekeeping/:id", async (req, res)=>{
     }
 })
 
-app.put("/update/complains/:id",async (req, res)=>{
+app.put("/update/complains/:id",authenticate,async (req, res)=>{
     //route to update the complains 
     const {id} = req.params;
     const updatePayload = req.body;
@@ -207,7 +226,7 @@ app.put("/update/complains/:id",async (req, res)=>{
 
 //DIFFERENT DELETE ENDPOINTS FOR 3 DIFFERENT REQUESTS
 
-app.delete("/delete/lunch/:id", async (req, res)=>{
+app.delete("/delete/lunch/:id",authenticate, async (req, res)=>{
     //route to delete the lunch requests
     const {id} = req.params;
     try {
@@ -221,7 +240,7 @@ app.delete("/delete/lunch/:id", async (req, res)=>{
     
 })
 
-app.delete("/delete/housekeeping/:id", async (req, res)=>{
+app.delete("/delete/housekeeping/:id",authenticate, async (req, res)=>{
     //route to delete the housekeeping requests
     const {id} = req.params;
     try {
@@ -233,7 +252,7 @@ app.delete("/delete/housekeeping/:id", async (req, res)=>{
     
 })
 
-app.delete("/delete/complains/:id",async (req, res)=>{
+app.delete("/delete/complains/:id",authenticate,async (req, res)=>{
     //route to delete the complains requests
     const {id} = req.params;
     try {
