@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const housekeepingSchema = new mongoose.Schema({
     name: String,
-    roomNumber: Number
+    roomNumber: Number,
+    userId: String
 });
 
 const HousekeepingRequest = mongoose.model('HousekeepingRequests', housekeepingSchema);

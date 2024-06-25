@@ -33,7 +33,8 @@ const createUser = baseRequest.omit({_id: true, name: true}).extend({
 
 const updateLunchReq = baseRequest.omit({_id: true}).extend({
     college: zod.string(),
-    phoneNumber: zod.string(),
+    // phoneNumber: zod.string(),
+    phoneNumber: zod.string().or(zod.number().transform(n => n.toString())), // Transform number to string (COPILOT CODE)
 });
 
 const updateHousekeepingReq = baseRequest.omit({_id: true}).extend({
