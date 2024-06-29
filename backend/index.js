@@ -6,6 +6,8 @@ const connectDB = require('./dbConfig');
 connectDB();
 const jwt = require("jsonwebtoken");
 const jwtPassword = '12345';
+const cors = require('cors');
+app.use(cors());
 
 const authRoutes = require('./auth/authRoutes');
 app.use('/', authRoutes);
