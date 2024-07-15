@@ -43,7 +43,7 @@ const updateHousekeepingReq = baseRequest.omit({_id: true}).extend({
 
 const updateComplainReq = baseRequest.omit({_id: true}).extend({
     issue: zod.string(),
-    roomNumber: zod.number()
+    roomNumber: zod.string()
 });
 
 module.exports = {

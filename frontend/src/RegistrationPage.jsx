@@ -36,6 +36,8 @@ const RegistrationPage = () => {
         <button type='submit'>Register</button>
 
         </form>
+        <p>Already a user?<a href='/login'>Login here</a></p>
+
 
     </div>
   )

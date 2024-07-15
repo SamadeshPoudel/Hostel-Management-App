@@ -4,6 +4,9 @@ import RegistrationPage from './RegistrationPage';
 import LoginPage from './LoginPage';
 import HomePage from './HomePage';
 import ProtectedRoute from './ProtectedRoute';
+import LunchRequestPage from './Components/LunchRequest/LunchRequestPage';
+import HousekeepingRequestPage from './Components/HousekeepingRequest/HousekeepingRequestPage';
+import ComplainRequestPage from './Components/ComplainRequest/ComplainRequestPage';
 
 
 const App = () => {
@@ -19,6 +22,26 @@ const App = () => {
       </ProtectedRoute>
     }/>
     <Route path="/" element={<RegistrationPage />} />
+
+    
+    <Route path='/request-lunch' element={
+      <ProtectedRoute>
+        <LunchRequestPage />
+      </ProtectedRoute>
+    } />
+
+    <Route path='/request-housekeeping' element={
+      <ProtectedRoute>
+        <HousekeepingRequestPage />
+      </ProtectedRoute>
+    } />
+
+    <Route path='/register-issue' element={
+      <ProtectedRoute>
+        <ComplainRequestPage />
+      </ProtectedRoute>
+    } />
+
    </Routes>
    </BrowserRouter>
   );

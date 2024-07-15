@@ -54,15 +54,15 @@ app.post("/create/lunch",authenticate, async (req, res)=>{
      }
 
 
-     await LunchRequest.create({
+     const createdLunchReq = await LunchRequest.create({
         name: createPayload.name,
         college: createPayload.college,
         phoneNumber: createPayload.phoneNumber,
         userId: req.user.userId
      })
-     res.json({
-        msg: "Lunch Request created successfully"
-     })
+     res.json(
+        createdLunchReq
+     )
 })
 
 app.post("/create/housekeeping",authenticate,async (req, res)=>{
@@ -77,14 +77,12 @@ app.post("/create/housekeeping",authenticate,async (req, res)=>{
      }
 
 
-     await HousekeepingRequest.create({
+    const createdHousekeepingReq = await HousekeepingRequest.create({
         name: createPayload.name,
         roomNumber: createPayload.roomNumber,
         userId: req.user.userId
      })
-     res.json({
-        msg: "HouseKeeping Request created successfully"
-     })
+     res.json(createdHousekeepingReq)
 
 })
 
@@ -100,15 +98,13 @@ app.post("/create/complain",authenticate,async (req, res)=>{
      }
 
 
-     await ComplainRequest.create({
+    const createdComplainReq = await ComplainRequest.create({
         name: createPayload.name,
         issue: createPayload.issue,
         roomNumber: createPayload.roomNumber,
         userId: req.user.userId
      })
-     res.json({
-        msg: "Complain registered successfully"
-     })
+     res.json(createdComplainReq)
 
 })
 
@@ -118,18 +114,18 @@ app.get("/requests/lunch",authenticate, async (req, res)=>{
     //route to get all the lunch requests
     let userId = req.user.userId;
     const lunchReq = await LunchRequest.find({userId});
-    res.json({
+    res.json(
         lunchReq
-    })
+    )
 })
 
 app.get("/requests/housekeeping",authenticate,async (req, res)=>{
     //route to get all the housekeeping requests
     let userId = req.user.userId;
     const housekeepingReq = await HousekeepingRequest.find({userId});
-    res.json({
+    res.json(
         housekeepingReq
-    })
+    )
     
 })
 
@@ -137,9 +133,9 @@ app.get("/requests/complains",authenticate, async (req, res)=>{
     //route to get all the complains filed by you
     let userId = req.user.userId;
     const complainReq = await ComplainRequest.find({userId});
-    res.json({
+    res.json(
         complainReq
-    })
+    )
     
 })
 
@@ -208,7 +204,7 @@ app.put("/update/housekeeping/:id",authenticate, async (req, res)=>{
         }
 
         res.json({
-            msg: "HouseKeeping request successfully updated",
+            msg: "HouseKeeping request updated successfully",
             updatedHousekeeping
         })
     }catch(err){
@@ -309,6 +305,7 @@ app.delete("/delete/complains/:id",authenticate,async (req, res)=>{
         }
 
         await ComplainRequest.findByIdAndDelete(id);
+        
         res.status(200).json({msg:"Complain request successfully deleted"})
     } catch (error) {
         res.status(500).json({msg:"Error deleting complain request"})
