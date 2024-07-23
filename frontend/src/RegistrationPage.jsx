@@ -14,7 +14,9 @@ const RegistrationPage = () => {
     const handleSubmit = async (e)=>{
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/register', formData);
+            // const response = await axios.post('http://localhost:3000/register', formData);
+            const response = await axios.post('https://hostel-management-app-e3rs.onrender.com/register', formData);
+
             console.log(response.data);
             //redirecting to login page
             navigate('/login')

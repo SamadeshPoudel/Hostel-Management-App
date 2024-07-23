@@ -12,7 +12,7 @@
 //   // Fetch existing lunch requests
 //   const fetchRequests = async () => {
 //     try {
-//       const response = await axios.get('http://localhost:3000/requests/lunch');
+//       const response = await axios.get('https://hostel-management-app-e3rs.onrender.com/requests/lunch');
 //       console.log('Response data:', response.data); // Log the response data
 //       setRequests(Array.isArray(response.data.lunchReq) ? response.data.lunchReq : []);
 //     } catch (error) {
@@ -32,7 +32,7 @@
 //   e.preventDefault();
 //   try {
 //     const token = localStorage.getItem('token'); // Retrieve the token from local storage
-//     const response = await axios.post('http://localhost:3000/create/lunch', newRequest, {
+//     const response = await axios.post('https://hostel-management-app-e3rs.onrender.com/create/lunch', newRequest, {
 //       headers: {
 //         'Authorization': token // Include the token in the request headers
 //       }
@@ -48,7 +48,7 @@
 // const handleDelete = async (id) => {
 //   try {
 //     const token = localStorage.getItem('token'); // Retrieve the token from local storage
-//     await axios.delete(`http://localhost:3000/delete/lunch/${id}`, {
+//     await axios.delete(`https://hostel-management-app-e3rs.onrender.com/delete/lunch/${id}`, {
 //       headers: {
 //         'Authorization': token// Include the token in the request headers
 //       }
@@ -68,7 +68,7 @@
 
 //     if (newName && newCollege && newPhoneNumber) {
 //       try {
-//         const response = await axios.put(`http://localhost:3000/update/lunch/${id}`, {
+//         const response = await axios.put(`https://hostel-management-app-e3rs.onrender.com/update/lunch/${id}`, {
 //           name: newName,
 //           college: newCollege,
 //           phoneNumber: newPhoneNumber
@@ -149,7 +149,7 @@
 //   // Fetch existing lunch requests
 //   const fetchRequests = async () => {
 //     try {
-//       const response = await axios.get('http://localhost:3000/requests/lunch');
+//       const response = await axios.get('https://hostel-management-app-e3rs.onrender.com/requests/lunch');
 //       console.log('Response data:', response.data); // Log the response data
 //       setRequests(Array.isArray(response.data) ? response.data : []);
 //     } catch (error) {
@@ -169,7 +169,7 @@
 //     e.preventDefault();
 //     try {
 //       const token = localStorage.getItem('token'); // Retrieve the token from local storage
-//       const response = await axios.post('http://localhost:3000/create/lunch', newRequest, {
+//       const response = await axios.post('https://hostel-management-app-e3rs.onrender.com/create/lunch', newRequest, {
 //         headers: {
 //           'Authorization': token // Include the token in the request headers
 //         }
@@ -185,7 +185,7 @@
 //   const handleDelete = async (id) => {
 //     try {
 //       const token = localStorage.getItem('token'); // Retrieve the token from local storage
-//       await axios.delete(`http://localhost:3000/delete/lunch/${id}`, {
+//       await axios.delete(`https://hostel-management-app-e3rs.onrender.com/delete/lunch/${id}`, {
 //         headers: {
 //           'Authorization': token // Include the token in the request headers
 //         }
@@ -206,7 +206,7 @@
 //     if (newName && newCollege && newPhoneNumber) {
 //       try {
 //         const token = localStorage.getItem('token'); // Retrieve the token from local storage
-//         const response = await axios.put(`http://localhost:3000/update/lunch/${id}`, {
+//         const response = await axios.put(`https://hostel-management-app-e3rs.onrender.com/update/lunch/${id}`, {
 //           name: newName,
 //           college: newCollege,
 //           phoneNumber: newPhoneNumber
@@ -293,7 +293,7 @@ const LunchRequestPage = () => {
   // Fetch existing lunch requests
   const fetchRequests = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/requests/lunch');
+      const response = await axios.get('https://hostel-management-app-e3rs.onrender.com/requests/lunch');
       console.log('Response data:', response.data); // Log the response data
       setRequests(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
@@ -313,7 +313,7 @@ const LunchRequestPage = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token'); // Retrieve the token from local storage
-      const response = await axios.post('http://localhost:3000/create/lunch', newRequest, {
+      const response = await axios.post('https://hostel-management-app-e3rs.onrender.com/create/lunch', newRequest, {
         headers: {
           'Authorization': token // Include the token in the request headers
         }
@@ -329,7 +329,7 @@ const LunchRequestPage = () => {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem('token'); // Retrieve the token from local storage
-      await axios.delete(`http://localhost:3000/delete/lunch/${id}`, {
+      await axios.delete(`https://hostel-management-app-e3rs.onrender.com/delete/lunch/${id}`, {
         headers: {
           'Authorization': token // Include the token in the request headers
         }
@@ -352,7 +352,7 @@ const LunchRequestPage = () => {
     const updatedRequest = requests.find(request => request._id === id);
     try {
       const token = localStorage.getItem('token'); // Retrieve the token from local storage
-      const response = await axios.put(`http://localhost:3000/update/lunch/${id}`, updatedRequest, {
+      const response = await axios.put(`https://hostel-management-app-e3rs.onrender.com/update/lunch/${id}`, updatedRequest, {
         headers: {
           'Authorization': token // Include the token in the request headers
         }

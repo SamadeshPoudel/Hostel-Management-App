@@ -13,7 +13,9 @@ const ComplainRequestPage = () => {
   // Fetch existing complain requests
   const fetchRequests = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/requests/complains');
+      // const response = await axios.get('http://localhost:3000/requests/complains');
+      const response = await axios.get('https://hostel-management-app-e3rs.onrender.com/requests/complains');
+
       console.log('Response data:', response.data); // Log the response data
       setRequests(Array.isArray(response.data) ? response.data.map(request => ({ ...request, isEditing: false })) : []);
     } catch (error) {
@@ -33,7 +35,7 @@ const ComplainRequestPage = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token'); // Retrieve the token from local storage
-      const response = await axios.post('http://localhost:3000/create/complain', newRequest, {
+      const response = await axios.post('https://hostel-management-app-e3rs.onrender.com/create/complain', newRequest, {
         headers: {
           'Authorization': token // Include the token in the request headers
         }
@@ -49,7 +51,7 @@ const ComplainRequestPage = () => {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem('token'); // Retrieve the token from local storage
-      await axios.delete(`http://localhost:3000/delete/complains/${id}`, {
+      await axios.delete(`https://hostel-management-app-e3rs.onrender.com/delete/complains/${id}`, {
         headers: {
           'Authorization': token // Include the token in the request headers
         }
@@ -72,7 +74,7 @@ const ComplainRequestPage = () => {
     const updatedRequest = requests.find(request => request._id === id);
     try {
       const token = localStorage.getItem('token'); // Retrieve the token from local storage
-      const response = await axios.put(`http://localhost:3000/update/complains/${id}`, updatedRequest, {
+      const response = await axios.put(`https://hostel-management-app-e3rs.onrender.com/update/complains/${id}`, updatedRequest, {
         headers: {
           'Authorization': token // Include the token in the request headers
         }
