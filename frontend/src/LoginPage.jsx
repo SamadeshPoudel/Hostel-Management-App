@@ -14,7 +14,6 @@ const LoginPage = () => {
     const handleSubmit = async (e)=>{
         e.preventDefault();
         try {
-            // const response = await axios.post("http://localhost:3000/login", formData);
             const response = await axios.post("https://hostel-management-app-e3rs.onrender.com/login", formData);
 
             console.log(response.data);
