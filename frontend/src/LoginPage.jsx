@@ -1,24 +1,22 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const LoginPage = () => {
-    const [formData, setFormData] = useState({email:"", password:""});
+    const [formData, setFormData] = useState({ email: "", password: "" });
     const navigate = useNavigate();
 
-    const handleChange = (e) =>{
-        setFormData({...formData, [e.target.name]:e.target.value});
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
-    const handleSubmit = async (e)=>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post("https://hostel-management-app-e3rs.onrender.com/login", formData);
-
             console.log(response.data);
             localStorage.setItem('token', response.data.token);
             navigate('/home');
-
         } catch (error) {
             console.log(error);
         }
@@ -38,7 +36,7 @@ const LoginPage = () => {
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form onSubmit={handleSubmit} action="#" method="POST" className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                             Email address
@@ -50,8 +48,9 @@ const LoginPage = () => {
                                 type="email"
                                 required
                                 autoComplete="email"
-                                value={formData.email} onChange={handleChange}
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                value={formData.email}
+                                onChange={handleChange}
+                                className="block w-full rounded-md border border-gray-300 py-2 px-3 text-gray-900 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             />
                         </div>
                     </div>
@@ -74,23 +73,26 @@ const LoginPage = () => {
                                 type="password"
                                 required
                                 autoComplete="current-password"
-                                value={formData.password} onChange={handleChange}
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                value={formData.password}
+                                onChange={handleChange}
+                                className="block w-full rounded-md border border-gray-300 py-2 px-3 text-gray-900 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             />
                         </div>
 
-                        {/* Test Credentials Display */}
-                        <div className="mt-4 text-sm text-gray-700 bg-gray-100 p-3 rounded-md">
-                            <p className="font-medium text-gray-900">Test Credentials:</p>
-                            <p>Email: <code className="text-indigo-600">testuser@gmail.com</code></p>
-                            <p>Password: <code className="text-indigo-600">test1234567</code></p>
+                        {/* Test Credentials */}
+                        <div className="mt-4 bg-indigo-50 border border-indigo-200 rounded-lg p-3 text-sm text-gray-800">
+                            <p className="font-semibold text-indigo-700 mb-1">Test Credentials:</p>
+                            <div className="space-y-1">
+                                <p><span className="font-medium text-gray-700">Email:</span> <code className="text-indigo-700">testuser@gmail.com</code></p>
+                                <p><span className="font-medium text-gray-700">Password:</span> <code className="text-indigo-700">test1234567</code></p>
+                            </div>
                         </div>
                     </div>
 
                     <div>
                         <button
                             type="submit"
-                            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            className="flex w-full justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         >
                             Sign In
                         </button>
@@ -98,8 +100,8 @@ const LoginPage = () => {
                 </form>
 
                 <p className="mt-10 text-center text-sm text-gray-500">
-                    Don't have an account?{' '}
-                    <a href='/register' className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                    Don&apos;t have an account?{' '}
+                    <a href='/register' className="font-semibold text-indigo-600 hover:text-indigo-500">
                         Create one
                     </a>
                 </p>
