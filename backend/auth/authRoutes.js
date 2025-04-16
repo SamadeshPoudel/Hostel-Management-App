@@ -28,7 +28,6 @@ router.post("/register",async (req, res)=>{
         const newUser = new User({userId,username, email, password});
         await newUser.save();
         
-
         var token = jwt.sign({email: email, userId: userId}, jwtPassword);
         return res.json({msg:`Hey ${username}, welcome to Hostel-Management-App`,token});
 
